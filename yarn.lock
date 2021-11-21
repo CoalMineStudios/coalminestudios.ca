@@ -326,7 +326,6 @@
     string-width "^4.2.3"
 
 "@nuxt/kit@npm:@nuxt/kit-edge@3.0.0-27291847.07c7a20":
-  name "@nuxt/kit-edge"
   version "3.0.0-27291847.07c7a20"
   resolved "https://registry.yarnpkg.com/@nuxt/kit-edge/-/kit-edge-3.0.0-27291847.07c7a20.tgz#ca5d1557d25647668d5cb06541661f506e911506"
   integrity sha512-rRMJKhEz4lxwt4tkdddufLEx+X7wq0llM+YGrUAt6kAzzkYpTId1zXETCc39cFw0Iuj1HEJ1VsdAv1dI26lbqg==
@@ -352,7 +351,6 @@
     untyped "^0.3.0"
 
 "@nuxt/nitro@npm:@nuxt/nitro-edge@3.0.0-27291847.07c7a20":
-  name "@nuxt/nitro-edge"
   version "3.0.0-27291847.07c7a20"
   resolved "https://registry.yarnpkg.com/@nuxt/nitro-edge/-/nitro-edge-3.0.0-27291847.07c7a20.tgz#47abd90f214de9370e476207bb7c5faf00e5572b"
   integrity sha512-S+f7X9VvtZ6hZAi6SSpLu+I0TIuuc7VUY77FRCieyZV183Mb2bCslwv51B+G503G+1sSyTukMS4OR/SNWaeEQg==
@@ -416,7 +414,6 @@
     vue-server-renderer "^2.6.14"
 
 "@nuxt/vite-builder@npm:@nuxt/vite-builder-edge@3.0.0-27291847.07c7a20":
-  name "@nuxt/vite-builder-edge"
   version "3.0.0-27291847.07c7a20"
   resolved "https://registry.yarnpkg.com/@nuxt/vite-builder-edge/-/vite-builder-edge-3.0.0-27291847.07c7a20.tgz#a90b6dcf1b208e85797302acbaf1e6d35e913b64"
   integrity sha512-Sy3XqksKj6ZmA7Jw7OM3ZcFXdVcdPyE/yb6tSjD+luXRj4Z/T8hOrjqQ9iov9tUnoVGwytiDiJmW4NaRRpV3Lg==
@@ -443,7 +440,6 @@
     vite "^2.6.14"
 
 "@nuxt/webpack-builder@npm:@nuxt/webpack-builder-edge@3.0.0-27291847.07c7a20":
-  name "@nuxt/webpack-builder-edge"
   version "3.0.0-27291847.07c7a20"
   resolved "https://registry.yarnpkg.com/@nuxt/webpack-builder-edge/-/webpack-builder-edge-3.0.0-27291847.07c7a20.tgz#dadd7ff25cd3ebf805940bc0cb7a9d96d1dac2ff"
   integrity sha512-7gAn6VawlP15O6o0wmIEWFyyBp5snb0JONySRkISDqUrT+WIMqB/+U8s13aZ7ojK3773NQpmxoNfd/P+qiBZqQ==
@@ -3592,7 +3588,6 @@ number-is-nan@^1.0.0:
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
 "nuxi@npm:nuxi-edge@3.0.0-27291847.07c7a20":
-  name nuxi-edge
   version "3.0.0-27291847.07c7a20"
   resolved "https://registry.yarnpkg.com/nuxi-edge/-/nuxi-edge-3.0.0-27291847.07c7a20.tgz#7b95d619a3eeb29e76307f7f7f534454d090bff5"
   integrity sha512-dXd9Aq9wd44e4dydwxoxRz/7whtipRK28HBDm2914uyp7p5iE36AH6TDFvw+4lj6PA+bNer8eWl4mDU7XX+Wpw==
@@ -4411,6 +4406,11 @@ safe-buffer@^5.2.1, safe-buffer@~5.2.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+sanitize.css@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/sanitize.css/-/sanitize.css-13.0.0.tgz#2675553974b27964c75562ade3bd85d79879f173"
+  integrity sha512-ZRwKbh/eQ6w9vmTjkuG0Ioi3HBwPFce0O+v//ve+aOq1oeCy7jMV2qzzAlpsNuqpqCBjjriM1lbtZbF/Q8jVyA==
 
 sass@^1.43.4:
   version "1.43.4"

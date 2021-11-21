@@ -8,5 +8,8 @@
   "devDependencies": {
     "nuxt3": "3.0.0-27291847.07c7a20",
     "sass": "^1.43.4"
+  },
+  "dependencies": {
+    "sanitize.css": "^13.0.0"
   }
 }
