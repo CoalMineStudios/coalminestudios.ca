@@ -1,0 +1,115 @@
+import FormData from 'form-data';
+import Mailgun from 'mailgun.js';
+import Sentry from '@sentry/node';
+import type { Handler, HandlerResponse } from '@netlify/functions';
+import type { FormMessageData, MailgunResponse } from './mail-types';
+
+/**
+ * Creates text body for email
+ */
+function createBody (data: FormMessageData) {
+  return `
+===
+Name: ${data.name}
+Email: ${data.email}
+===
+
+${data.message}
+`;
+}
+
+const mailgun = new Mailgun(FormData);
+const mailgunClient = mailgun.client({ username: 'api', key: process.env.MG_API_KEY || 'key-yourkeyhere' });
+
+/**
+ * Send email
+ * @param data message data
+ * @returns Mailgun response message
+ */
+async function sendMail (data: FormMessageData): Promise<MailgunResponse> {
+  const { MG_RECIPIENT, MG_DOMAIN } = process.env;
+  const body = createBody(data);
+  const options = {
+    from: `coalminestudios.ca <noreply@${MG_DOMAIN}>`,
+    to: MG_RECIPIENT,
+    subject: `New contact form submission from ${MG_DOMAIN}`,
+    text: body,
+  };
+
+  const { message } = await mailgunClient.messages.create(MG_DOMAIN, options);
+
+  return message;
+};
+
+let sentryInitialized = false;
+
+/**
+ * Initializes sentry
+ */
+function initSentry (): void {
+  Sentry.init({ dsn: process.env.SENTRY_DSN });
+  sentryInitialized = true;
+}
+
+/**
+ * Reports errors to Sentry correctly
+ */
+function reportError (err: Error | string): void | Promise<boolean> {
+  if (process.env.NODE_ENV !== 'production') {
+    return console.log(err);
+  }
+
+  if (!sentryInitialized) {
+    return;
+  }
+
+  typeof err === 'string' ? Sentry.captureMessage(err) : Sentry.captureException(err);
+
+  return Sentry.flush();
+}
+
+initSentry();
+
+const response500: HandlerResponse = {
+  statusCode: 500,
+  body: 'Something went wrong',
+};
+
+/**
+ * Netlify Function handler
+ */
+const handler: Handler = async (event, context) => {
+  // Make sure AWS doesn't wait for an empty event loop, as that can break things with Sentry
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  // only accept POST
+  if (event.httpMethod !== 'POST') {
+    return response500;
+  }
+
+  // verify request has body, filter honeypot
+  const data = JSON.parse(event.body);
+
+  if (!data || data.honeypot !== '') {
+    return response500;
+  }
+
+  try {
+    // Send mail
+    const message = await sendMail(data);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(message),
+    };
+  } catch (err) {
+    // Send errors to Sentry
+    await reportError(err);
+
+    return response500;
+  }
+};
+
+export {
+  handler,
+};
