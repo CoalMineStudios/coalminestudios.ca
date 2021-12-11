@@ -1,13 +1,13 @@
+import type { Handler, HandlerResponse } from '@netlify/functions';
+import Sentry from '@sentry/node';
 import FormData from 'form-data';
 import Mailgun from 'mailgun.js';
-import Sentry from '@sentry/node';
-import type { Handler, HandlerResponse } from '@netlify/functions';
-import type { FormMessageData, MailgunResponse } from './mail-types';
+import type { ContactFormData, MailgunResponseBody } from '../types/mail';
 
 /**
  * Creates text body for email
  */
-function createBody (data: FormMessageData) {
+function createBody (data: ContactFormData) {
   return `
 ===
 Name: ${data.name}
@@ -26,7 +26,7 @@ const mailgunClient = mailgun.client({ username: 'api', key: process.env.MG_API_
  * @param data message data
  * @returns Mailgun response message
  */
-async function sendMail (data: FormMessageData): Promise<MailgunResponse> {
+async function sendMail (data: ContactFormData): Promise<MailgunResponseBody> {
   const { MG_RECIPIENT, MG_DOMAIN } = process.env;
   const body = createBody(data);
   const options = {
@@ -36,7 +36,7 @@ async function sendMail (data: FormMessageData): Promise<MailgunResponse> {
     text: body,
   };
 
-  const { message } = await mailgunClient.messages.create(MG_DOMAIN, options);
+  const { message } = await mailgunClient.messages.create(MG_DOMAIN || '', options);
 
   return message;
 };
@@ -82,8 +82,8 @@ const handler: Handler = async (event, context) => {
   // Make sure AWS doesn't wait for an empty event loop, as that can break things with Sentry
   context.callbackWaitsForEmptyEventLoop = false;
 
-  // only accept POST
-  if (event.httpMethod !== 'POST') {
+  // only accept POST with body
+  if (event.httpMethod !== 'POST' || event.body == null) {
     return response500;
   }
 
@@ -102,7 +102,7 @@ const handler: Handler = async (event, context) => {
       statusCode: 200,
       body: JSON.stringify(message),
     };
-  } catch (err) {
+  } catch (err: any) {
     // Send errors to Sentry
     await reportError(err);
 

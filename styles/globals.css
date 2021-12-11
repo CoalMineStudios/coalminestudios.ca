@@ -1,9 +1,7 @@
-// Fonts and `sanitize.css` are loaded in `@@/nuxt.config.ts`
-
 :root {
   /* TYPOGRAPHY */
   --font-family-headline: 'Space Grotesk';
-  // fallback stack from https://github.com/csstools/sanitize.css#typography
+  /* fallback stack from https://github.com/csstools/sanitize.css#typography */
   --font-family-sans-serif: 'Work Sans', system-ui,
     /* macOS 10.11-10.12 */ -apple-system, /* Windows 6+ */ Segoe UI,
     /* Android 4+ */ Roboto, /* Ubuntu 10.10+ */ Ubuntu,
@@ -21,8 +19,10 @@
   background-color: var(--color-background-primary);
   color: var(--color-text-primary);
   font-family: var(--font-family-sans-serif);
+}
 
-  @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
+  :root {
     --color-background-primary: #000;
     --color-text-primary: #fff;
   }
@@ -30,6 +30,6 @@
 
 html,
 body,
-#__nuxt {
+#__next {
   height: 100%;
 }

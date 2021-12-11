@@ -1,10 +1,10 @@
-export interface FormMessageData {
+export interface ContactFormData {
   name: string;
   email: string;
   message: string;
 }
 
-export interface MailgunResponse {
+export interface MailgunResponseBody {
   id: string;
   message: string;
 }
