@@ -1,3 +1,5 @@
+@use 'themes';
+
 :root {
   /* TYPOGRAPHY */
   --font-family-headline: 'Space Grotesk';
@@ -13,11 +15,24 @@
   --text-size-display-heading: 6rem;
   --text-size-display-tag: 2.25rem;
 
-  /* COLORS */
-  --color-background-primary: #fff;
-  --color-text-primary: #000;
+  /* COLOR */
   --color-canary-yellow: #ffd540;
   --color-contrast-canary-yellow: #000;
+  @include themes.light;
+
+  // default color shceme media query
+  @media (prefers-color-scheme: dark) {
+    @include themes.dark;
+  }
+
+  // Support theme toggling
+  &.lightTheme {
+    @include themes.light;
+  }
+
+  &.darkTheme {
+    @include themes.dark;
+  }
 
   /* SHAPE */
   --border-radius-base: 1rem;
@@ -26,13 +41,6 @@
   background-color: var(--color-background-primary);
   color: var(--color-text-primary);
   font-family: var(--font-family-sans-serif);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background-primary: #000;
-    --color-text-primary: #fff;
-  }
 }
 
 @media screen and (max-width: 24rem) {
