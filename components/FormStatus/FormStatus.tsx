@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import type { FC, HTMLAttributes, ReactNode } from 'react';
-import styles from './FormStatus.module.css';
+import styles from './FormStatus.module.scss';
 import type { Status, StatusWithMessage } from './types';
 
 interface Props extends HTMLAttributes<HTMLSpanElement> {

@@ -1,5 +1,5 @@
 import Canary from '@/components/Canary';
-import styles from '@/styles/pages/Home.module.css';
+import styles from '@/styles/pages/Home.module.scss';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
