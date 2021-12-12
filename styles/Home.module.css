@@ -1,41 +1,3 @@
-<template>
-  <div class="container">
-    <main class="content">
-      <header class="header">
-        <CanaryMascot class="pinned-mascot" />
-
-        <h1 class="display-heading">Coal Mine Studios</h1>
-
-        <h2 class="display-tag">
-          <span>Dream.</span>
-          <span>Design.</span>
-          <span>Dev.</span>
-        </h2>
-      </header>
-
-      <p>
-        We design and build digital products with UX at their core. Whatever you need to make your
-        dream reailty, we're here for you.
-      </p>
-
-      <div class="cta">
-        <button class="button">Get a quote</button>
-      </div>
-    </main>
-  </div>
-</template>
-
-<script>
-import CanaryMascot from '~/components/CanaryMascot.vue';
-
-export default {
-  components: {
-    CanaryMascot,
-  },
-}
-</script>
-
-<style lang="scss" scoped>
 .container {
   align-items: center;
   justify-content: center;
@@ -90,4 +52,3 @@ export default {
   justify-content: center;
   margin-top: 5rem;
 }
-</style>

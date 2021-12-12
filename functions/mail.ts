@@ -1,13 +1,13 @@
+import type { Handler, HandlerResponse } from '@netlify/functions';
+import Sentry from '@sentry/node';
 import FormData from 'form-data';
 import Mailgun from 'mailgun.js';
-import Sentry from '@sentry/node';
-import type { Handler, HandlerResponse } from '@netlify/functions';
-import type { FormMessageData, MailgunResponse } from './mail-types';
+import type { ContactFormData, MailgunResponseBody } from '../types/mail';
 
 /**
  * Creates text body for email
  */
-function createBody (data: FormMessageData) {
+function formatEmailText(data: ContactFormData) {
   return `
 ===
 Name: ${data.name}
@@ -18,35 +18,39 @@ ${data.message}
 `;
 }
 
-const mailgun = new Mailgun(FormData);
-const mailgunClient = mailgun.client({ username: 'api', key: process.env.MG_API_KEY || 'key-yourkeyhere' });
-
 /**
  * Send email
  * @param data message data
  * @returns Mailgun response message
  */
-async function sendMail (data: FormMessageData): Promise<MailgunResponse> {
-  const { MG_RECIPIENT, MG_DOMAIN } = process.env;
-  const body = createBody(data);
-  const options = {
+async function sendMail(data: ContactFormData): Promise<MailgunResponseBody> {
+  const { MG_RECIPIENT, MG_DOMAIN, MG_API_KEY } = process.env;
+
+  if (!MG_API_KEY) {
+    throw new Error('Missing Credentials');
+  }
+
+  const mailgun = new Mailgun(FormData);
+  const mailgunClient = mailgun.client({
+    username: 'api',
+    key: MG_API_KEY,
+  });
+  const { message } = await mailgunClient.messages.create(MG_DOMAIN || '', {
     from: `coalminestudios.ca <noreply@${MG_DOMAIN}>`,
     to: MG_RECIPIENT,
     subject: `New contact form submission from ${MG_DOMAIN}`,
-    text: body,
-  };
-
-  const { message } = await mailgunClient.messages.create(MG_DOMAIN, options);
+    text: formatEmailText(data),
+  });
 
   return message;
-};
+}
 
 let sentryInitialized = false;
 
 /**
  * Initializes sentry
  */
-function initSentry (): void {
+function initSentry(): void {
   Sentry.init({ dsn: process.env.SENTRY_DSN });
   sentryInitialized = true;
 }
@@ -54,7 +58,7 @@ function initSentry (): void {
 /**
  * Reports errors to Sentry correctly
  */
-function reportError (err: Error | string): void | Promise<boolean> {
+function reportError(err: Error | string): void | Promise<boolean> {
   if (process.env.NODE_ENV !== 'production') {
     return console.log(err);
   }
@@ -63,7 +67,9 @@ function reportError (err: Error | string): void | Promise<boolean> {
     return;
   }
 
-  typeof err === 'string' ? Sentry.captureMessage(err) : Sentry.captureException(err);
+  typeof err === 'string'
+    ? Sentry.captureMessage(err)
+    : Sentry.captureException(err);
 
   return Sentry.flush();
 }
@@ -82,8 +88,8 @@ const handler: Handler = async (event, context) => {
   // Make sure AWS doesn't wait for an empty event loop, as that can break things with Sentry
   context.callbackWaitsForEmptyEventLoop = false;
 
-  // only accept POST
-  if (event.httpMethod !== 'POST') {
+  // only accept POST with body
+  if (event.httpMethod !== 'POST' || event.body == null) {
     return response500;
   }
 
@@ -102,7 +108,7 @@ const handler: Handler = async (event, context) => {
       statusCode: 200,
       body: JSON.stringify(message),
     };
-  } catch (err) {
+  } catch (err: any) {
     // Send errors to Sentry
     await reportError(err);
 
@@ -110,6 +116,4 @@ const handler: Handler = async (event, context) => {
   }
 };
 
-export {
-  handler,
-};
+export { handler };
