@@ -10,10 +10,17 @@
     /* Windows emoji */ 'Segoe UI Emoji', /* Windows emoji */ 'Segoe UI Symbol',
     /* Linux emoji */ 'Noto Color Emoji';
 
+  --text-size-display-heading: 6rem;
+  --text-size-display-tag: 2.25rem;
+
   /* COLORS */
   --color-background-primary: #fff;
   --color-text-primary: #000;
   --color-canary-yellow: #ffd540;
+  --color-contrast-canary-yellow: #000;
+
+  /* SHAPE */
+  --border-radius-base: 1rem;
 
   /* STYLING */
   background-color: var(--color-background-primary);
@@ -28,8 +35,69 @@
   }
 }
 
+@media screen and (max-width: 24rem) {
+  :root {
+    --text-size-display-heading: 5rem;
+  }
+}
+
 html,
 body,
 #__next {
   height: 100%;
+}
+
+.container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 100%;
+  margin: 0 auto;
+  max-width: 48rem;
+}
+
+.content {
+  margin: 1.5rem;
+  width: 100%;
+}
+
+.header {
+  margin-bottom: 5rem;
+  position: relative;
+}
+
+.display-heading {
+  font-family: var(--font-family-headline);
+  font-size: var(--text-size-display-heading);
+  margin-bottom: 4rem;
+  margin-top: 0;
+  line-height: calc(var(--text-size-display-heading) + 0.25rem);
+}
+
+.display-tag {
+  display: flex;
+  justify-content: space-between;
+  max-width: 24rem;
+  font-family: var(--font-family-headline);
+  font-size: 2.25rem;
+  font-weight: 300;
+}
+
+.heading1 {
+  font-size: 3rem;
+}
+
+.heading2 {
+  font-size: 2.5rem;
+}
+
+.formRow {
+  margin-top: 1rem;
+  display: block;
+}
+
+.link,
+.link:visited,
+.link:hover {
+  color: var(--color-text-primary);
 }

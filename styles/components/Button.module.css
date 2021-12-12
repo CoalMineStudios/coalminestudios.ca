@@ -1,0 +1,16 @@
+.button {
+  background-color: transparent;
+  border-color: var(--color-text-primary);
+  border-radius: var(--border-radius-base);
+  padding: 0.5rem;
+}
+
+.buttonPrimary {
+  border-color: var(--color-canary-yellow);
+  background-color: var(--color-canary-yellow);
+  color: var(--color-contrast-canary-yellow)
+}
+
+.button:disabled {
+  opacity: 0.4;
+}

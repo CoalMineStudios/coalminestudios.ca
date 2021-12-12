@@ -1,0 +1,23 @@
+.formStatus {
+  display: inline-block;
+  padding: 0.5rem;
+}
+
+.statusIcon {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.formStatusSending {
+  animation: flicker 750ms ease-in-out infinite alternate both;
+}
+
+@keyframes flicker {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.4;
+  }
+}
