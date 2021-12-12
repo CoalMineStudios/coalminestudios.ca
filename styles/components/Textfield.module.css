@@ -1,0 +1,9 @@
+.textfield {
+  background-color: transparent;
+  border-color: var(--color-text-primary);
+  border-radius: 1rem;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  width: 100%;
+}

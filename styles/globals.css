@@ -45,6 +45,7 @@ body,
 
 .content {
   margin: 1.5rem;
+  width: 100%;
 }
 
 .header {
@@ -67,4 +68,24 @@ body,
   font-family: var(--font-family-headline);
   font-size: 2.25rem;
   font-weight: 300;
+}
+
+.heading-1 {
+  font-size: 3rem;
+}
+
+.heading-2 {
+  font-size: 2.5rem;
+}
+
+.button {
+  background-color: transparent;
+  border-color: var(--color-text-primary);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.formRow {
+  margin-top: 1rem;
+  display: block;
 }
