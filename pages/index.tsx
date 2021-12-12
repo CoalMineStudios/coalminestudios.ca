@@ -27,10 +27,6 @@ const Home: NextPage = () => {
           We design and build digital products with UX at their core. Whatever
           you need to make your dream reailty, we&apos;re here for you.
         </p>
-
-        <div className={styles.cta}>
-          <button className={styles.button}>Get a quote</button>
-        </div>
       </main>
     </div>
   );
