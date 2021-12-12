@@ -18,20 +18,23 @@ ${data.message}
 `;
 }
 
-const mailgun = new Mailgun(FormData);
-const mailgunClient = mailgun.client({
-  username: 'api',
-  key: process.env.MG_API_KEY || 'key-yourkeyhere',
-});
-
 /**
  * Send email
  * @param data message data
  * @returns Mailgun response message
  */
 async function sendMail(data: ContactFormData): Promise<MailgunResponseBody> {
-  const { MG_RECIPIENT, MG_DOMAIN } = process.env;
+  const { MG_RECIPIENT, MG_DOMAIN, MG_API_KEY } = process.env;
 
+  if (!MG_API_KEY) {
+    throw new Error('Missing Credentials');
+  }
+
+  const mailgun = new Mailgun(FormData);
+  const mailgunClient = mailgun.client({
+    username: 'api',
+    key: MG_API_KEY,
+  });
   const { message } = await mailgunClient.messages.create(MG_DOMAIN || '', {
     from: `coalminestudios.ca <noreply@${MG_DOMAIN}>`,
     to: MG_RECIPIENT,
