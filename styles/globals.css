@@ -15,6 +15,9 @@
   --color-text-primary: #000;
   --color-canary-yellow: #ffd540;
 
+  /* SHAPE */
+  --border-radius-base: 1rem;
+
   /* STYLING */
   background-color: var(--color-background-primary);
   color: var(--color-text-primary);
