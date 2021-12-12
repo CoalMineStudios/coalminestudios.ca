@@ -14,6 +14,7 @@
   --color-background-primary: #fff;
   --color-text-primary: #000;
   --color-canary-yellow: #ffd540;
+  --color-contrast-canary-yellow: #000;
 
   /* SHAPE */
   --border-radius-base: 1rem;
@@ -79,13 +80,6 @@ body,
 
 .heading-2 {
   font-size: 2.5rem;
-}
-
-.button {
-  background-color: transparent;
-  border-color: var(--color-text-primary);
-  border-radius: 1rem;
-  padding: 0.5rem;
 }
 
 .formRow {

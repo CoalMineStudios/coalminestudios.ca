@@ -1,10 +1,10 @@
 import type { TextInputs } from '@/types/forms';
 import type { ContactFormData } from '@/types/mail';
 import { useState, type ChangeEvent, type FormEventHandler } from 'react';
+import Button from './Button';
+import FormStatus, { type Status } from './FormStatus';
 import Textarea from './TextArea';
 import TextField from './TextField';
-
-type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
 const initFormData = (): ContactFormData => ({
   name: '',
@@ -15,7 +15,7 @@ const initFormData = (): ContactFormData => ({
 
 const ContactForm = () => {
   const [formData, setFormData] = useState(initFormData());
-  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+  const [formStatus, setFormStatus] = useState<Status>('idle');
 
   const handleTextChange = (field: keyof ContactFormData) => {
     return function updateFormData(event: ChangeEvent<TextInputs>) {
@@ -87,7 +87,10 @@ const ContactForm = () => {
       />
 
       <div className="formRow">
-        <button className="button">Send</button> {formStatus}
+        <Button disabled={formStatus === 'sending'} color="primary">
+          Send
+        </Button>
+        {formStatus !== 'idle' && <FormStatus status={formStatus} />}
       </div>
     </form>
   );
