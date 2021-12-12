@@ -2,12 +2,12 @@ import type { Handler, HandlerResponse } from '@netlify/functions';
 import Sentry from '@sentry/node';
 import FormData from 'form-data';
 import Mailgun from 'mailgun.js';
-import type { ContactFormData, MailgunResponseBody } from '../types/mail';
+import type { ContactFormData, MailgunResponseBody } from '@/types/mail';
 
 /**
  * Creates text body for email
  */
-function formatEmailText(data: ContactFormData) {
+function formatEmailText(data: Omit<ContactFormData, 'honeypot'>) {
   return `
 ===
 Name: ${data.name}
@@ -23,7 +23,9 @@ ${data.message}
  * @param data message data
  * @returns Mailgun response message
  */
-async function sendMail(data: ContactFormData): Promise<MailgunResponseBody> {
+async function sendMail(
+  data: Omit<ContactFormData, 'honeypot'>,
+): Promise<MailgunResponseBody> {
   const { MG_RECIPIENT, MG_DOMAIN, MG_API_KEY } = process.env;
 
   if (!MG_API_KEY) {
@@ -94,7 +96,7 @@ const handler: Handler = async (event, context) => {
   }
 
   // verify request has body, filter honeypot
-  const data = JSON.parse(event.body);
+  const data: ContactFormData = JSON.parse(event.body);
 
   if (!data || data.honeypot !== '') {
     return response500;

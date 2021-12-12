@@ -1,74 +1,93 @@
+import type { TextInputs } from '@/types/forms';
 import type { ContactFormData } from '@/types/mail';
-import { SyntheticEvent, useState } from 'react';
-import Textarea from './Textarea';
-import Textfield from './Textfield';
+import { useState, type ChangeEvent, type FormEventHandler } from 'react';
+import Textarea from './TextArea';
+import TextField from './TextField';
 
-async function sendMail(body: ContactFormData) {
-  const response = await fetch('/.netlify/functions/mail', {
-    body: JSON.stringify(body),
-    method: 'POST',
-  });
+type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
-  const data = await response.json();
-
-  alert(JSON.stringify(data, null, 2));
-}
-
-interface ContactFormDataWithHoneypot extends ContactFormData {
-  honeypot?: string;
-}
+const initFormData = (): ContactFormData => ({
+  name: '',
+  email: '',
+  message: '',
+  honeypot: '',
+});
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState<ContactFormDataWithHoneypot>({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState(initFormData());
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
 
-  function handleSubmit(event: SyntheticEvent) {
+  const handleTextChange = (field: keyof ContactFormData) => {
+    return function updateFormData(event: ChangeEvent<TextInputs>) {
+      setFormData({ ...formData, [field]: event.target.value });
+    };
+  };
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
-    sendMail(formData);
-  }
+    setFormStatus('sending');
+
+    try {
+      const res = await fetch('/.netlify/functions/mail', {
+        body: JSON.stringify(formData),
+        method: 'POST',
+      });
+
+      if (!res.ok) {
+        throw new Error('Sending failed');
+      }
+
+      setFormStatus('success');
+      setFormData(initFormData());
+    } catch {
+      setFormStatus('error');
+    }
+  };
 
   return (
     <form className="form" onSubmit={handleSubmit}>
-      <Textfield
+      <TextField
         label="Name"
         required
         className="formRow"
         value={formData.name}
-        onChange={(event) =>
-          setFormData({ ...formData, name: event.target.value })
-        }
+        onChange={handleTextChange('name')}
       />
-      <Textfield
+
+      <TextField
         label="Email"
         type="email"
         required
+        value={formData.email}
         className="formRow"
-        onChange={(event) =>
-          setFormData({ ...formData, email: event.target.value })
-        }
+        onChange={handleTextChange('email')}
       />
-      <Textfield
+
+      <TextField
         label="A password"
         className="formRow"
-        onChange={(event) =>
-          setFormData({ ...formData, honeypot: event.target.value })
-        }
+        value={formData.honeypot}
+        onChange={handleTextChange('honeypot')}
+        style={{
+          display: 'none',
+        }}
+        inputProps={{
+          tabIndex: -1,
+          autoComplete: 'off',
+        }}
       />
+
       <Textarea
         label="Message"
         required
         className="formRow"
         rows={4}
-        onChange={(event) =>
-          setFormData({ ...formData, message: event.target.value })
-        }
+        value={formData.message}
+        onChange={handleTextChange('message')}
       />
 
       <div className="formRow">
-        <button className="button">Send</button>
+        <button className="button">Send</button> {formStatus}
       </div>
     </form>
   );
