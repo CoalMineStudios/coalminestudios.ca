@@ -1,22 +1,22 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
-import Canary from '../components/Canary';
+import styles from '@/styles/Home.module.css';
+import Canary from '@/components/Canary';
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Head>
         <title>Coal Mine Studios</title>
       </Head>
 
-      <main className={styles.content}>
-        <header className={styles.header}>
-          <Canary className={styles['pinned-mascot']} />
+      <main className="content">
+        <header className="header">
+          <Canary className={styles.pinnedCanary} />
 
-          <h1 className={styles['display-heading']}>Coal Mine Studios</h1>
+          <h1 className="display-heading">Coal Mine Studios</h1>
 
-          <h2 className={styles['display-tag']}>
+          <h2 className="display-tag">
             <span>Dream.</span>
             <span>Design.</span>
             <span>Dev.</span>
