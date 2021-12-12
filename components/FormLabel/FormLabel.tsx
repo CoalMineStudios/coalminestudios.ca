@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import type { CSSProperties, ReactNode } from 'react';
-import styles from 'styles/components/FormLabel.module.css';
+import styles from './FormLabel.module.css';
 
 interface Props {
   children?: ReactNode;

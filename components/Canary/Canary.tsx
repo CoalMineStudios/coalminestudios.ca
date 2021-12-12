@@ -1,4 +1,4 @@
-import styles from '@/styles/components/Canary.module.css';
+import styles from './Canary.module.css';
 import classNames from 'classnames';
 
 interface Props {

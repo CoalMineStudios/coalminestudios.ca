@@ -1,8 +1,8 @@
+import FormLabel from '@/components/FormLabel';
 import type { TextInputProps } from '@/types/forms';
 import classNames from 'classnames';
 import type { HTMLInputTypeAttribute, InputHTMLAttributes } from 'react';
-import styles from 'styles/components/TextField.module.css';
-import FormLabel from './FormLabel';
+import styles from './TextField.module.css';
 
 interface Props extends TextInputProps<HTMLInputElement> {
   type?: HTMLInputTypeAttribute;

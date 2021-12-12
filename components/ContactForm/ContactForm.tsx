@@ -1,10 +1,11 @@
+import Button from '@/components/Button';
+import type { Status } from '@/components/FormStatus';
+import FormStatus from '@/components/FormStatus';
+import Textarea from '@/components/TextArea';
+import TextField from '@/components/TextField';
 import type { TextInputs } from '@/types/forms';
 import type { ContactFormData } from '@/types/mail';
 import { useState, type ChangeEvent, type FormEventHandler } from 'react';
-import Button from './Button';
-import FormStatus, { type Status } from './FormStatus';
-import Textarea from './TextArea';
-import TextField from './TextField';
 
 const initFormData = (): ContactFormData => ({
   name: '',
