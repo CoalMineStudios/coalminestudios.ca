@@ -1,8 +1,8 @@
-import styles from './Canary.module.css'
-import classNames from 'classnames'
+import styles from './Canary.module.css';
+import classNames from 'classnames';
 
 interface Props {
-  className?: string
+  className?: string;
 }
 
 const Canary = (props: Props) => {
@@ -14,7 +14,7 @@ const Canary = (props: Props) => {
         props.className,
       )}
     />
-  )
-}
+  );
+};
 
-export default Canary
+export default Canary;

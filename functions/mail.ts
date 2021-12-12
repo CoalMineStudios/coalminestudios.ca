@@ -7,7 +7,7 @@ import type { ContactFormData, MailgunResponseBody } from '../types/mail';
 /**
  * Creates text body for email
  */
-function createBody (data: ContactFormData) {
+function formatEmailText(data: ContactFormData) {
   return `
 ===
 Name: ${data.name}
@@ -19,34 +19,35 @@ ${data.message}
 }
 
 const mailgun = new Mailgun(FormData);
-const mailgunClient = mailgun.client({ username: 'api', key: process.env.MG_API_KEY || 'key-yourkeyhere' });
+const mailgunClient = mailgun.client({
+  username: 'api',
+  key: process.env.MG_API_KEY || 'key-yourkeyhere',
+});
 
 /**
  * Send email
  * @param data message data
  * @returns Mailgun response message
  */
-async function sendMail (data: ContactFormData): Promise<MailgunResponseBody> {
+async function sendMail(data: ContactFormData): Promise<MailgunResponseBody> {
   const { MG_RECIPIENT, MG_DOMAIN } = process.env;
-  const body = createBody(data);
-  const options = {
+
+  const { message } = await mailgunClient.messages.create(MG_DOMAIN || '', {
     from: `coalminestudios.ca <noreply@${MG_DOMAIN}>`,
     to: MG_RECIPIENT,
     subject: `New contact form submission from ${MG_DOMAIN}`,
-    text: body,
-  };
-
-  const { message } = await mailgunClient.messages.create(MG_DOMAIN || '', options);
+    text: formatEmailText(data),
+  });
 
   return message;
-};
+}
 
 let sentryInitialized = false;
 
 /**
  * Initializes sentry
  */
-function initSentry (): void {
+function initSentry(): void {
   Sentry.init({ dsn: process.env.SENTRY_DSN });
   sentryInitialized = true;
 }
@@ -54,7 +55,7 @@ function initSentry (): void {
 /**
  * Reports errors to Sentry correctly
  */
-function reportError (err: Error | string): void | Promise<boolean> {
+function reportError(err: Error | string): void | Promise<boolean> {
   if (process.env.NODE_ENV !== 'production') {
     return console.log(err);
   }
@@ -63,7 +64,9 @@ function reportError (err: Error | string): void | Promise<boolean> {
     return;
   }
 
-  typeof err === 'string' ? Sentry.captureMessage(err) : Sentry.captureException(err);
+  typeof err === 'string'
+    ? Sentry.captureMessage(err)
+    : Sentry.captureException(err);
 
   return Sentry.flush();
 }
@@ -110,6 +113,4 @@ const handler: Handler = async (event, context) => {
   }
 };
 
-export {
-  handler,
-};
+export { handler };
