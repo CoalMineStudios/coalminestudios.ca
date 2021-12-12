@@ -4,8 +4,13 @@
     var(--color-canary-yellow) 0%,
     rgba(255, 213, 64, 0) 100%
   );
-  height: 102px;
-  width: 102px;
+  width: 30%;
+}
+
+.canary:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
 }
 
 @keyframes canary-animation {
