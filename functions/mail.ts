@@ -110,9 +110,9 @@ const handler: Handler = async (event, context) => {
       statusCode: 200,
       body: JSON.stringify(message),
     };
-  } catch (err: any) {
+  } catch (err) {
     // Send errors to Sentry
-    await reportError(err);
+    await reportError(err as string | Error);
 
     return response500;
   }
