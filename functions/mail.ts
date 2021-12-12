@@ -96,7 +96,7 @@ const handler: Handler = async (event, context) => {
   // verify request has body, filter honeypot
   const data = JSON.parse(event.body);
 
-  if (!data || data.honeypot != null) {
+  if (!data || data.honeypot !== '') {
     return response500;
   }
 
