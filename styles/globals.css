@@ -10,6 +10,9 @@
     /* Windows emoji */ 'Segoe UI Emoji', /* Windows emoji */ 'Segoe UI Symbol',
     /* Linux emoji */ 'Noto Color Emoji';
 
+  --text-size-display-heading: 6rem;
+  --text-size-display-tag: 2.25rem;
+
   /* COLORS */
   --color-background-primary: #fff;
   --color-text-primary: #000;
@@ -29,6 +32,12 @@
   :root {
     --color-background-primary: #000;
     --color-text-primary: #fff;
+  }
+}
+
+@media screen and (max-width: 24rem) {
+  :root {
+    --text-size-display-heading: 5rem;
   }
 }
 
@@ -59,10 +68,10 @@ body,
 
 .display-heading {
   font-family: var(--font-family-headline);
-  font-size: 6rem;
+  font-size: var(--text-size-display-heading);
   margin-bottom: 4rem;
   margin-top: 0;
-  line-height: 6.25rem;
+  line-height: calc(var(--text-size-display-heading) + 0.25rem);
 }
 
 .display-tag {
@@ -74,15 +83,21 @@ body,
   font-weight: 300;
 }
 
-.heading-1 {
+.heading1 {
   font-size: 3rem;
 }
 
-.heading-2 {
+.heading2 {
   font-size: 2.5rem;
 }
 
 .formRow {
   margin-top: 1rem;
   display: block;
+}
+
+.link,
+.link:visited,
+.link:hover {
+  color: var(--color-text-primary);
 }
