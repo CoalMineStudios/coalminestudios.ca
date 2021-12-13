@@ -1,9 +1,7 @@
-import styles from '@/styles/components/FormStatus.module.css';
 import classNames from 'classnames';
 import type { FC, HTMLAttributes, ReactNode } from 'react';
-
-type StatusWithMessage = 'sending' | 'success' | 'error';
-export type Status = 'idle' | StatusWithMessage;
+import styles from './FormStatus.module.scss';
+import type { Status, StatusWithMessage } from './types';
 
 interface Props extends HTMLAttributes<HTMLSpanElement> {
   status: Status;

@@ -1,8 +1,8 @@
-import { TextInputProps } from '@/types/forms';
+import FormLabel from '@/components/FormLabel';
+import type { TextInputProps } from '@/types/forms';
 import classNames from 'classnames';
-import { TextareaHTMLAttributes } from 'react';
-import styles from 'styles/components/TextArea.module.css';
-import FormLabel from './FormLabel';
+import type { TextareaHTMLAttributes } from 'react';
+import styles from './TextArea.module.scss';
 
 interface Props extends TextInputProps<HTMLTextAreaElement> {
   rows?: number;

@@ -1,0 +1,11 @@
+@mixin light {
+  /* COLORS */
+  --color-background-primary: #fff;
+  --color-text-primary: #000;
+
+}
+
+@mixin dark {
+  --color-background-primary: #000;
+  --color-text-primary: #fff;
+}

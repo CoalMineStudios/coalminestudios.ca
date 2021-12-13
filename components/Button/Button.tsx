@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import type { ButtonHTMLAttributes, FC } from 'react';
-import styles from '@/styles/components/Button.module.css';
+import styles from './Button.module.scss';
 
 type Colors = 'primary';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  color?: Colors;
+  color?: Colors | undefined;
 }
 
 const Button: FC<Props> = ({ className, children, color, ...props }) => {

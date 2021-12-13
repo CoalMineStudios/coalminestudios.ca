@@ -22,7 +22,13 @@ module.exports = {
     'no-nested-ternary': 'error',
     'no-return-assign': ['error', 'always'],
     'no-shadow': 'error',
-    'no-unused-vars': [
+    'no-return-await': 'error',
+    'no-script-url': 'error',
+    'object-shorthand': ['error', 'always'],
+    'prefer-rest-params': 'error',
+    radix: 'error',
+    '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/no-unused-vars': [
       'error',
       {
         vars: 'all',
@@ -30,11 +36,6 @@ module.exports = {
         ignoreRestSiblings: true,
       },
     ],
-    'no-return-await': 'error',
-    'no-script-url': 'error',
-    'object-shorthand': ['error', 'always'],
-    'prefer-rest-params': 'error',
-    radix: 'error',
   },
   overrides: [
     {
