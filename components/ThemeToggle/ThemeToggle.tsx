@@ -27,9 +27,12 @@ const ThemeToggle = () => {
   return (
     <div className={styles.themeToggle}>
       <Select
+        aria-label="Select colour theme"
         options={themeOptions}
+        instanceId="theme-select"
         className="theme-select"
         classNamePrefix="theme-select"
+        isSearchable={false}
         value={themeOptions.find((option) => option.value === activeTheme)}
         onChange={(newValue) => newValue && setActiveTheme(newValue.value)}
       />
