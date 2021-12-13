@@ -12,6 +12,8 @@
       }
 
       &__control {
+        transition: none;
+
         &--is-focused {
           box-shadow: 0 0 0 1px var(--color-canary-yellow) !important;
         }
