@@ -1,7 +1,7 @@
 import UserContext from '@/contexts/UserContext';
 import { useContext, useEffect, useState } from 'react';
 import type { Theme } from './types';
-import { isTheme } from './types';
+// import { isTheme } from './types';
 import Select from 'react-select';
 import styles from './ThemeToggle.module.scss';
 
@@ -19,20 +19,11 @@ const themeOptions: readonly ThemeOption[] = [
 const ThemeToggle = () => {
   const context = useContext(UserContext);
   const [activeTheme, setActiveTheme] = useState(context.theme);
-  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    if (isInitialized) {
-      document.documentElement.dataset['theme'] = activeTheme;
-      window.localStorage.setItem('theme', activeTheme);
-    }
-  }, [isInitialized, activeTheme]);
-
-  useEffect(() => {
-    const storedTheme = window.localStorage.getItem('theme');
-    setActiveTheme(isTheme(storedTheme) ? storedTheme : 'system');
-    setIsInitialized(true);
-  }, []);
+    document.documentElement.dataset['theme'] = activeTheme;
+    window.localStorage.setItem('theme', activeTheme);
+  }, [activeTheme]);
 
   return (
     <div className={styles.themeToggle}>
