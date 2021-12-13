@@ -26,11 +26,11 @@
   }
 
   // Support theme toggling
-  &.lightTheme {
+  &[data-theme='light'] {
     @include themes.light;
   }
 
-  &.darkTheme {
+  &[data-theme='dark'] {
     @include themes.dark;
   }
 
