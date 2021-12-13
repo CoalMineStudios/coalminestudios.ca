@@ -1,7 +1,6 @@
 import UserContext from '@/contexts/UserContext';
 import { useContext, useEffect, useState } from 'react';
 import type { Theme } from './types';
-// import { isTheme } from './types';
 import Select from 'react-select';
 import styles from './ThemeToggle.module.scss';
 
