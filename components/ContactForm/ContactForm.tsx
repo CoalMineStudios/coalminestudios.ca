@@ -5,7 +5,8 @@ import Textarea from '@/components/TextArea';
 import TextField from '@/components/TextField';
 import type { TextInputs } from '@/types/forms';
 import type { ContactFormData } from '@/types/mail';
-import { useState, type ChangeEvent, type FormEventHandler } from 'react';
+import type { ChangeEvent, FormEventHandler } from 'react';
+import { useState } from 'react';
 
 const initFormData = (): ContactFormData => ({
   name: '',

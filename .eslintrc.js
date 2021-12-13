@@ -27,6 +27,7 @@ module.exports = {
     'object-shorthand': ['error', 'always'],
     'prefer-rest-params': 'error',
     radix: 'error',
+    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/no-unused-vars': [
       'error',
       {
