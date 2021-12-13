@@ -1,16 +1,20 @@
 import UserContext from '@/contexts/UserContext';
 import { useContext, useEffect, useState } from 'react';
-import type { Theme } from '.';
-import { isTheme } from '.';
-import Button from '../Button';
+import type { Theme } from './types';
+import { isTheme } from './types';
+import Select from 'react-select';
+import styles from './ThemeToggle.module.scss';
 
-export const themes = ['system', 'light', 'dark'] as const;
+interface ThemeOption {
+  value: Theme;
+  label: `${string}${Capitalize<Theme>}`;
+}
 
-const themeLabels: Record<Theme, `${string}${Capitalize<Theme>}`> = {
-  system: '💻 System',
-  light: '🌞 Light',
-  dark: '🌛 Dark',
-};
+const themeOptions: readonly ThemeOption[] = [
+  { value: 'system', label: '💻 System' },
+  { value: 'light', label: '🌞 Light' },
+  { value: 'dark', label: '🌛 Dark' },
+];
 
 const ThemeToggle = () => {
   const context = useContext(UserContext);
@@ -31,19 +35,15 @@ const ThemeToggle = () => {
   }, []);
 
   return (
-    <UserContext.Provider
-      value={{ theme: activeTheme, setTheme: setActiveTheme }}
-    >
-      {themes.map((theme) => (
-        <Button
-          onClick={() => setActiveTheme(theme)}
-          key={theme}
-          {...(theme === activeTheme && { color: 'primary' })}
-        >
-          {themeLabels[theme]}
-        </Button>
-      ))}
-    </UserContext.Provider>
+    <div className={styles.themeToggle}>
+      <Select
+        options={themeOptions}
+        className="theme-select"
+        classNamePrefix="theme-select"
+        value={themeOptions.find((option) => option.value === activeTheme)}
+        onChange={(newValue) => newValue && setActiveTheme(newValue.value)}
+      />
+    </div>
   );
 };
 
